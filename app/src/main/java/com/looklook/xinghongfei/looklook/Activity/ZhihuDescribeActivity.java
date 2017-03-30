@@ -91,7 +91,7 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
     private String url;
     private IZhihuStoryPresenter mIZhihuStoryPresenter;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
-    private Handler mHandler=new Handler();
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +108,7 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
         getData();
 
         chromeFader = new ElasticDragDismissFrameLayout.SystemChromeFader(this);
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             getWindow().getSharedElementReturnTransition().addListener(zhihuReturnHomeListener);
             getWindow().setSharedElementEnterTransition(new ChangeBounds());
@@ -119,30 +119,29 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
     }
 
     private void initlistenr() {
-        zhihuReturnHomeListener =
-                new AnimUtils.TransitionListenerAdapter() {
-                    @Override
-                    public void onTransitionStart(Transition transition) {
-                        super.onTransitionStart(transition);
-                        // hide the fab as for some reason it jumps position??  TODO work out why
-                        mToolbar.animate()
-                                .alpha(0f)
-                                .setDuration(100)
-                                .setInterpolator(new AccelerateInterpolator());
-                        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
-                            mShot.setElevation(1f);
-                            mToolbar.setElevation(0f);
-                        }
-                        mNest.animate()
-                                .alpha(0f)
-                                .setDuration(50)
-                                .setInterpolator(new AccelerateInterpolator());
-                    }
-                };
+        zhihuReturnHomeListener = new AnimUtils.TransitionListenerAdapter() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+                super.onTransitionStart(transition);
+                // hide the fab as for some reason it jumps position??  TODO work out why
+                mToolbar.animate()
+                        .alpha(0f)
+                        .setDuration(100)
+                        .setInterpolator(new AccelerateInterpolator());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mShot.setElevation(1f);
+                    mToolbar.setElevation(0f);
+                }
+                mNest.animate()
+                        .alpha(0f)
+                        .setDuration(50)
+                        .setInterpolator(new AccelerateInterpolator());
+            }
+        };
         scrollListener = new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (oldScrollY<168){
+                if (oldScrollY < 168) {
                     mShot.setOffset(-oldScrollY);
                     mTranslateYTextView.setOffset(-oldScrollY);
                 }
@@ -157,13 +156,13 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
         mImageUrl = getIntent().getStringExtra("image");
         mIZhihuStoryPresenter = new ZhihuStoryPresenterImpl(this);
         mNest.setOnScrollChangeListener(scrollListener);
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
             mShot.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
                     mShot.getViewTreeObserver().removeOnPreDrawListener(this);
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         startPostponedEnterTransition();
                     }
                     return true;
@@ -175,12 +174,12 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
     }
 
     private void initView() {
-        mToolbar.setTitleMargin(20,20,0,10);
+        mToolbar.setTitleMargin(20, 20, 0, 10);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNest.smoothScrollTo(0,0);
+                mNest.smoothScrollTo(0, 0);
             }
         });
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -240,7 +239,7 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
 
     @Override
     protected void onDestroy() {
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             getWindow().getSharedElementReturnTransition().removeListener(zhihuReturnHomeListener);
         }
@@ -286,15 +285,15 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
     @Override
     public void showZhihuStory(ZhihuStory zhihuStory) {
 
-            Glide.with(this)
-                    .load(zhihuStory.getImage()).centerCrop()
-                    .listener(loadListener).override(width,heigh)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(mShot);
+        Glide.with(this)
+                .load(zhihuStory.getImage()).centerCrop()
+                .listener(loadListener).override(width, heigh)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(mShot);
         url = zhihuStory.getShareUrl();
-        isEmpty=TextUtils.isEmpty(zhihuStory.getBody());
-        mBody=zhihuStory.getBody();
-        scc=zhihuStory.getCss();
+        isEmpty = TextUtils.isEmpty(zhihuStory.getBody());
+        mBody = zhihuStory.getBody();
+        scc = zhihuStory.getCss();
         if (isEmpty) {
             wvZhihu.loadUrl(url);
         } else {
@@ -304,7 +303,6 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
 
 
     }
-
 
 
     private void expandImageAndFinish() {
@@ -317,18 +315,18 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
                 @Override
                 public void onAnimationEnd(Animator animation) {
 
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         finishAfterTransition();
-                    }else {
+                    } else {
                         finish();
                     }
                 }
             });
             expandImage.start();
         } else {
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 finishAfterTransition();
-            }else {
+            } else {
                 finish();
             }
         }
@@ -361,7 +359,7 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
 
                             // color the status bar. Set a complementary dark color on L,
                             // light or dark color on M (with matching status bar icons)
-                            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
 
                                 int statusBarColor = getWindow().getStatusBarColor();
@@ -408,7 +406,7 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
 
                             // slightly more opaque ripple on the pinned image to compensate
                             // for the scrim
-                            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
                                 mShot.setForeground(ViewUtils.createRipple(palette, 0.3f, 0.6f,
                                         ContextCompat.getColor(ZhihuDescribeActivity.this, R.color.mid_grey),
@@ -431,9 +429,9 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
 
     private void enterAnimation() {
         float offSet = mToolbar.getHeight();
-        LinearInterpolator interpolator=new LinearInterpolator();
+        LinearInterpolator interpolator = new LinearInterpolator();
         viewEnterAnimation(mShot, offSet, interpolator);
-        viewEnterAnimationNest(mNest,0f,interpolator);
+        viewEnterAnimationNest(mNest, 0f, interpolator);
 
     }
 
@@ -448,6 +446,7 @@ public class ZhihuDescribeActivity extends BaseActivity implements IZhihuStory {
                 .setListener(null)
                 .start();
     }
+
     private void viewEnterAnimationNest(View view, float offset, Interpolator interp) {
         view.setTranslationY(-offset);
         view.setAlpha(0.3f);

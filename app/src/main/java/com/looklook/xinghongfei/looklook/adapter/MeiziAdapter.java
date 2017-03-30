@@ -50,7 +50,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public MeiziAdapter(Context context) {
 
         this.mContext = context;
-        decsi=DensityUtil.getDeviceInfo(mContext);
+        decsi = DensityUtil.getDeviceInfo(mContext);
 
     }
 
@@ -87,7 +87,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private void bindLoadingViewHold(LoadingMoreHolder holder, int position) {
-        holder.progressBar.setVisibility(showLoadingMore? View.VISIBLE : View.INVISIBLE);
+        holder.progressBar.setVisibility(showLoadingMore ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void bindViewHolderNormal(final MeiziViewHolder holder, final int position) {
@@ -97,7 +97,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDescribeActivity(meizi,holder);
+                startDescribeActivity(meizi, holder);
             }
         });
 //        holder.textView.setText("视频");
@@ -152,17 +152,17 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     }
 
-    private void startDescribeActivity(Meizi meizi,RecyclerView.ViewHolder holder){
+    private void startDescribeActivity(Meizi meizi, RecyclerView.ViewHolder holder) {
 
         Intent intent = new Intent(mContext, MeiziPhotoDescribeActivity.class);
-        intent.putExtra("image",meizi.getUrl());
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        intent.putExtra("image", meizi.getUrl());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             final android.support.v4.util.Pair<View, String>[] pairs = Help.createSafeTransitionParticipants
-                    ((Activity) mContext, false,new android.support.v4.util.Pair<>(((MeiziViewHolder)holder).imageView, mContext.getString(R.string.meizi)));
+                    ((Activity) mContext, false, new android.support.v4.util.Pair<>(((MeiziViewHolder) holder).imageView, mContext.getString(R.string.meizi)));
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, pairs);
             mContext.startActivity(intent, options.toBundle());
-        }else {
+        } else {
             mContext.startActivity(intent);
         }
 
@@ -170,7 +170,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return meiziItemes.size();
+        return meiziItemes.size() + 1;
     }
 
     public void addItems(ArrayList<Meizi> list) {
@@ -215,7 +215,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
-    public void addVedioDes(ArrayList<Gank> list){
+    public void addVedioDes(ArrayList<Gank> list) {
 
     }
 
